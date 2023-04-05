@@ -1,5 +1,10 @@
 export interface SignInWithApplePlugin {
   authorize(options?: SignInWithAppleOptions): Promise<SignInWithAppleResponse>;
+  getState(params: {
+    userId: string;
+  }): Promise<{
+    state: string;
+  }>;
 }
 
 export interface SignInWithAppleOptions {

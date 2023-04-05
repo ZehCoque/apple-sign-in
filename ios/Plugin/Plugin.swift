@@ -22,6 +22,17 @@ public class SignInWithApple: CAPPlugin {
         authorizationController.performRequests()
     }
 
+  @objc func getState(_ call: CAPPluginCall) {
+    let appleIDProvider = ASAuthorizationAppleIDProvider()
+    appleIDProvider.getCredentialState(forUserID: call.getString("userId")!) { (credentialState, error) in
+      if credentialState != .authorized {
+        call.reject("Not authorized")
+      } else {
+        call.resolve(["state": "authorized"])
+      }
+    }
+  }
+
     func getRequestedScopes(from call: CAPPluginCall) -> [ASAuthorization.Scope]? {
         var requestedScopes: [ASAuthorization.Scope] = []
 
